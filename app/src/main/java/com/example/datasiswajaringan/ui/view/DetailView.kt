@@ -1,17 +1,9 @@
 package com.example.datasiswajaringan.ui.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,10 +20,16 @@ import com.example.datasiswajaringan.ui.viewmodel.PenyediaViewModel
 fun DetailScreen(
     nim: String,
     navigateBack: () -> Unit,
+    onUpdateClick: (String) -> Unit,
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = viewModel(factory = PenyediaViewModel.Factory)
 ) {
     val detailUiState = viewModel.detailUiState.collectAsState().value
+
+    // Load data mahasiswa saat pertama kali layar ditampilkan
+    LaunchedEffect(nim) {
+        viewModel.getDetailMahasiswa(nim)
+    }
 
     Scaffold(
         modifier = modifier,
@@ -48,6 +46,7 @@ fun DetailScreen(
                 is DetailUiState.Loading -> OnLoading(modifier = Modifier.fillMaxSize())
                 is DetailUiState.Success -> DetailContent(
                     mahasiswa = detailUiState.mahasiswa,
+                    onUpdateClick = onUpdateClick,
                     modifier = Modifier.fillMaxSize()
                 )
                 is DetailUiState.Error -> OnError(retryAction = { viewModel.getDetailMahasiswa(nim) })
@@ -57,7 +56,11 @@ fun DetailScreen(
 }
 
 @Composable
-fun DetailContent(mahasiswa: Mahasiswa, modifier: Modifier = Modifier) {
+fun DetailContent(
+    mahasiswa: Mahasiswa,
+    onUpdateClick: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier = modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -78,5 +81,38 @@ fun DetailContent(mahasiswa: Mahasiswa, modifier: Modifier = Modifier) {
             text = "Alamat: ${mahasiswa.alamat}",
             style = MaterialTheme.typography.titleMedium
         )
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            onClick = { onUpdateClick(mahasiswa.nim) },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Update Data")
+        }
+    }
+}
+
+@Composable
+fun OnLoadingDetail(modifier: Modifier = Modifier) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = modifier
+    ) {
+        Text(text = "Loading...")
+    }
+}
+
+@Composable
+fun OnError(retryAction: () -> Unit) {
+    Box(
+        contentAlignment = Alignment.Center,
+        modifier = Modifier.fillMaxSize()
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "An error occurred. Please try again.")
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(onClick = retryAction) {
+                Text(text = "Retry")
+            }
+        }
     }
 }

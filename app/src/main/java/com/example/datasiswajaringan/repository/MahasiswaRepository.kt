@@ -49,6 +49,11 @@ class NetworkMahasiswaRepository(
     }
 
     override suspend fun getMahasiswaById(nim: String): Mahasiswa {
-        return MahasiswaApiService.getMahasiswabyNim(nim)
+        return try {
+            MahasiswaApiService.getMahasiswabyNim(nim)
+        } catch (e: Exception) {
+            println("Error fetching mahasiswa by ID: ${e.message}")
+            throw e
+        }
     }
 }

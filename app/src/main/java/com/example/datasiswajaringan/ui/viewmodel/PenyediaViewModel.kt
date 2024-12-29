@@ -11,6 +11,7 @@ object PenyediaViewModel{
     val Factory = viewModelFactory {
         initializer { HomeViewModel(aplikasiKontak().container.kontakRepository) }
         initializer { InsertViewModel(aplikasiKontak().container.kontakRepository) }
+        initializer { DetailViewModel(aplikasiKontak().container.kontakRepository) }
     }
 
     fun CreationExtras.aplikasiKontak(): MahasiswaApplications =
