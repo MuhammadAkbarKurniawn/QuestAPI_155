@@ -36,7 +36,7 @@ class NetworkMahasiswaRepository(
     override suspend fun deleteMahasiswa(nim: String) {
         try {
             val response = MahasiswaApiService.deleteMahasiswa(nim)
-            if (!response.isSuccessful) {
+            if (!response.isSuccessful   ) {
                 throw IOException("Failed to delete kontak. HTTP Status code: " +
                         "${response.code()}")
             } else {
