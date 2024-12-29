@@ -2,6 +2,7 @@ package com.example.datasiswajaringan.repository
 
 import com.example.datasiswajaringan.model.Mahasiswa
 import com.example.datasiswajaringan.service.MahasiswaService
+import java.io.IOException
 
 interface MahasiswaRepository{
 
@@ -20,6 +21,7 @@ class NetworkMahasiswaRepository(
     private val MahasiswaApiService: MahasiswaService
 ) : MahasiswaRepository {
 
+
     override suspend fun getMahasiswa(): List<Mahasiswa> =
         MahasiswaApiService.getAllMahasiswa()
 
@@ -28,22 +30,25 @@ class NetworkMahasiswaRepository(
     }
 
     override suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa) {
-        TODO("Not yet implemented")
+        MahasiswaApiService.updateMahasiswa(nim, mahasiswa)
     }
 
     override suspend fun deleteMahasiswa(nim: String) {
         try {
             val response = MahasiswaApiService.deleteMahasiswa(nim)
             if (!response.isSuccessful) {
-                throw Exception("Failed to delete Mahasiswa with NIM: $nim. Error: ${response.errorBody()?.string()}")
+                throw IOException("Failed to delete kontak. HTTP Status code: " +
+                        "${response.code()}")
+            } else {
+                response.message()
+                println(response.message())
             }
-        } catch (e: Exception) {
-            println("Error deleting Mahasiswa: ${e.message}")
-            throw e
+        } catch (e: Exception){
+            throw  e
         }
     }
 
     override suspend fun getMahasiswaById(nim: String): Mahasiswa {
-        TODO("Not yet implemented")
+        return MahasiswaApiService.getMahasiswabyNim(nim)
     }
 }
