@@ -1,5 +1,9 @@
 package com.example.datasiswajaringan.ui.view
 
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
@@ -11,6 +15,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.datasiswajaringan.ui.customwidget.CostumeTopAppBar
 import com.example.datasiswajaringan.ui.navigation.DestinasiNavigasi
 import com.example.datasiswajaringan.ui.viewmodel.InsertViewModel
+import kotlinx.coroutines.launch
 
 
 object DestinasiEntry : DestinasiNavigasi{
@@ -27,5 +32,32 @@ fun EntryMhsScreen(
 ){
     val coroutineScope = rememberCoroutineScope()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior()
+    Scaffold (
+        modifier =modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+        topBar = {
+            CostumeTopAppBar(
+                title = DestinasiEntry.titleRes,
+                canNavigateBack = true,
+                scrollBehavior = scrollBehavior,
+                navigateUp = navigateBack
+            )
+        }
+    ){innerPadding ->
+        EntryBody(
+            insertUiState = viewModel.uiState,
+            onSiswaValueChange = viewModel :: UpdateInsertMhsState,
+            onSaveClick = {
+                coroutineScope.launch {
+                    viewModel.insertMhs()
+                    navigateBack
+                }
+            },
+            modifier = Modifier
+                .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
+                .fillMaxWidth()
+        )
 
+    }
 }
+
