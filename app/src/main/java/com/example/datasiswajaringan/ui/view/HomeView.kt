@@ -115,7 +115,7 @@ fun HomeStatus(
                     modifier = modifier.fillMaxSize(),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text(text = "Tidak ada data Kontak")
+                    Text(text = "Tidak ada data Mahasiswa")
                 }
             } else {
                 MhsLayout(
