@@ -78,6 +78,14 @@ fun DetailContent(
             style = MaterialTheme.typography.titleMedium
         )
         Text(
+            text = "Angkatan: ${mahasiswa.angkatan}",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
+            text = "Jenis Kelamin: ${mahasiswa.jenisKelamin}",
+            style = MaterialTheme.typography.titleMedium
+        )
+        Text(
             text = "Alamat: ${mahasiswa.alamat}",
             style = MaterialTheme.typography.titleMedium
         )

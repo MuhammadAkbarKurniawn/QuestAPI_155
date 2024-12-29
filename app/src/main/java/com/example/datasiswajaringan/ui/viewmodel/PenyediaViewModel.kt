@@ -12,6 +12,7 @@ object PenyediaViewModel{
         initializer { HomeViewModel(aplikasiKontak().container.kontakRepository) }
         initializer { InsertViewModel(aplikasiKontak().container.kontakRepository) }
         initializer { DetailViewModel(aplikasiKontak().container.kontakRepository) }
+        initializer { UpdateViewModel(aplikasiKontak().container.kontakRepository) }
     }
 
     fun CreationExtras.aplikasiKontak(): MahasiswaApplications =
