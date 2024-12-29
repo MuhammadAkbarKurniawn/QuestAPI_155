@@ -27,6 +27,7 @@ import com.example.datasiswajaringan.ui.navigation.DestinasiNavigasi
 import com.example.datasiswajaringan.ui.viewmodel.InsertUiEvent
 import com.example.datasiswajaringan.ui.viewmodel.InsertUiState
 import com.example.datasiswajaringan.ui.viewmodel.InsertViewModel
+import com.example.datasiswajaringan.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
 
 
@@ -61,7 +62,7 @@ fun EntryMhsScreen(
             onSaveClick = {
                 coroutineScope.launch {
                     viewModel.insertMhs()
-                    navigateBack
+                    navigateBack()
                 }
             },
             modifier = Modifier

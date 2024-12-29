@@ -44,6 +44,7 @@ import com.example.datasiswajaringan.ui.customwidget.CostumeTopAppBar
 import com.example.datasiswajaringan.ui.navigation.DestinasiNavigasi
 import com.example.datasiswajaringan.ui.viewmodel.HomeUiState
 import com.example.datasiswajaringan.ui.viewmodel.HomeViewModel
+import com.example.datasiswajaringan.ui.viewmodel.PenyediaViewModel
 
 object DestinasiHome : DestinasiNavigasi{
     override val route = "home"
@@ -97,7 +98,7 @@ fun HomeStatus(
     homeUiState: HomeUiState,
     retryAction: () -> Unit,
     modifier: Modifier = Modifier,
-    onDeleteClick: (String) -> Unit = {},
+    onDeleteClick: (Mahasiswa) -> Unit = {},
     onDetailClick: (String) -> Unit = {}
 ) {
     when (homeUiState) {
@@ -114,8 +115,8 @@ fun HomeStatus(
                 MhsLayout(
                     mahasiswa = homeUiState.mahasiswa,
                     modifier = modifier.fillMaxWidth(),
-                    onDetailClick = { nim ->
-                        onDetailClick(nim)
+                    onDetailClick = {
+                        onDetailClick(it.nim)
                     },
                     onDeleteClick = {
                         onDeleteClick(it)
