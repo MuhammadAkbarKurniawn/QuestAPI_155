@@ -1,6 +1,6 @@
 package com.example.datasiswajaringan.ui.viewmodel
 
-import android.net.http.HttpException
+import retrofit2.HttpException
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -28,11 +28,24 @@ class HomeViewModel(private val mhs: MahasiswaRepository) : ViewModel() {
 
             try {
                 mhsUIState = HomeUiState.Success(mhs.getMahasiswa())
-            } catch (e: IOException) {
+            } catch (e:IOException) {
                 mhsUIState = HomeUiState.Error
-            } catch (e: HttpException) {
+            } catch (e:HttpException) {
                 mhsUIState = HomeUiState.Error
             }
         }
     }
+
+    fun deleteMhs(nim:String){
+        viewModelScope.launch{
+            try {
+                mhs.deleteMahasiswa(nim)
+            }catch (e:IOException){
+                HomeUiState.Error
+            }catch (e:HttpException){
+                HomeUiState.Error
+            }
+        }
+    }
 }
+
