@@ -37,7 +37,10 @@ fun DetailScreen(
             CostumeTopAppBar(
                 title = "Detail Mahasiswa",
                 canNavigateBack = true,
-                navigateUp = navigateBack
+                navigateUp = navigateBack,
+                        onRefresh = {
+                    viewModel.getDetailMahasiswa(nim)
+                }
             )
         }
     ) { innerPadding ->
