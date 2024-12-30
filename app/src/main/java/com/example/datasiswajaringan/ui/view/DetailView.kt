@@ -62,34 +62,49 @@ fun DetailContent(
     modifier: Modifier = Modifier
 ) {
     Column(
-        modifier = modifier.padding(16.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Text(
-            text = "Nama: ${mahasiswa.nama}",
-            style = MaterialTheme.typography.titleLarge
-        )
-        Text(
-            text = "NIM: ${mahasiswa.nim}",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Kelas: ${mahasiswa.kelas}",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Angkatan: ${mahasiswa.angkatan}",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Jenis Kelamin: ${mahasiswa.jenisKelamin}",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Text(
-            text = "Alamat: ${mahasiswa.alamat}",
-            style = MaterialTheme.typography.titleMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            )
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Text(
+                    text = "Nama: ${mahasiswa.nama}",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = "NIM: ${mahasiswa.nim}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Kelas: ${mahasiswa.kelas}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Angkatan: ${mahasiswa.angkatan}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Jenis Kelamin: ${mahasiswa.jenisKelamin}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = "Alamat: ${mahasiswa.alamat}",
+                    style = MaterialTheme.typography.titleMedium
+                )
+            }
+        }
         Button(
             onClick = { onUpdateClick(mahasiswa.nim) },
             modifier = Modifier.fillMaxWidth()
