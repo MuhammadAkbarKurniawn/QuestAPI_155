@@ -17,3 +17,17 @@ data class Mahasiswa (
     val angkatan: String
 )
 
+
+@Serializable
+data class ALlMahasiswaResponse(
+    val status: Boolean,
+    val message: String,
+    val data: List<Mahasiswa>
+)
+
+@Serializable
+data class MahasiswaDetailResponse(
+    val status: Boolean,
+    val message: String,
+    val data: Mahasiswa
+)

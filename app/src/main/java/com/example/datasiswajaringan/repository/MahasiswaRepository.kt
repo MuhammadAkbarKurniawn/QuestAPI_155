@@ -1,12 +1,14 @@
 package com.example.datasiswajaringan.repository
 
+import com.example.datasiswajaringan.model.ALlMahasiswaResponse
 import com.example.datasiswajaringan.model.Mahasiswa
+import com.example.datasiswajaringan.model.MahasiswaDetailResponse
 import com.example.datasiswajaringan.service.MahasiswaService
 import java.io.IOException
 
 interface MahasiswaRepository{
 
-    suspend fun getMahasiswa(): List<Mahasiswa>
+    suspend fun getMahasiswa(): ALlMahasiswaResponse
 
     suspend fun insertMahasiswa(mahasiswa: Mahasiswa)
 
@@ -22,7 +24,7 @@ class NetworkMahasiswaRepository(
 ) : MahasiswaRepository {
 
 
-    override suspend fun getMahasiswa(): List<Mahasiswa> =
+    override suspend fun getMahasiswa(): ALlMahasiswaResponse =
         MahasiswaApiService.getAllMahasiswa()
 
     override suspend fun insertMahasiswa(mahasiswa: Mahasiswa) {
@@ -50,7 +52,7 @@ class NetworkMahasiswaRepository(
 
     override suspend fun getMahasiswaById(nim: String): Mahasiswa {
         return try {
-            MahasiswaApiService.getMahasiswabyNim(nim)
+            MahasiswaApiService.getMahasiswabyNim(nim).data
         } catch (e: Exception) {
             println("Error fetching mahasiswa by ID: ${e.message}")
             throw e
