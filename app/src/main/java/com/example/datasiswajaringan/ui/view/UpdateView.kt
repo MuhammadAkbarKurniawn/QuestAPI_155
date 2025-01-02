@@ -21,11 +21,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.datasiswajaringan.ui.customwidget.CostumeTopAppBar
+import com.example.datasiswajaringan.ui.navigation.DestinasiNavigasi
 import com.example.datasiswajaringan.ui.viewmodel.InsertUiEvent
 import com.example.datasiswajaringan.ui.viewmodel.UpdateUiState
 import com.example.datasiswajaringan.ui.viewmodel.UpdateViewModel
 import com.example.datasiswajaringan.ui.viewmodel.PenyediaViewModel
 import kotlinx.coroutines.launch
+
+object DestinasiUpdate : DestinasiNavigasi {
+    override val route = "update"
+    override val titleRes = "Update Mahasiswa"
+    const val NIM = "nim"
+    val routesWithArg = "$route/{$NIM}"
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,7 +53,7 @@ fun UpdateScreen(
     Scaffold(
         topBar = {
             CostumeTopAppBar(
-                title = "Update Mahasiswa",
+                title = DestinasiUpdate.titleRes,
                 canNavigateBack = true,
                 navigateUp = navigateBack
             )
